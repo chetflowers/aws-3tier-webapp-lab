@@ -6,11 +6,11 @@ This project demonstrates a classic 3-tier architecture on AWS using EC2, RDS, a
 
 ## 🧱 Architecture Overview
 
-- **Frontend:** EC2 running Apache HTTPD
-- **Backend:** MySQL 8 on Amazon RDS
-- **Storage (optional):** S3 static hosting
-- **Security:** SSH key access and Security Groups
-- **Tools Used:** CLI, yum, MySQL client, nano, bash
+- **Frontend**: EC2 running Apache HTTPD  
+- **Backend**: MySQL 8 on Amazon RDS  
+- **Storage (optional)**: S3 static hosting  
+- **Security**: SSH key access and Security Groups  
+- **Tools Used**: CLI, `yum`, MySQL client, `nano`, `bash`
 
 ---
 
@@ -40,19 +40,24 @@ aws-3tier-webapp-lab/
 
 Created folder structure and initialized GitHub repo.
 
-📸 `project-init-folder-structure.png`  
-📸 `github-repo-open.png`
+📸 Initial folder structure  
+![Folder Structure](assets/project-init-folder-structure.png)  
+📸 GitHub repo  
+![GitHub Repo](assets/github-repo-open.png)
 
 ---
 
 ### 2️⃣ Create RDS Instance and Configure
 
-- RDS created via AWS Console  
-- Security Group updated to allow EC2 access on port 3306
+RDS created via AWS Console.  
+Security Group updated to allow EC2 access on port 3306.
 
-📸 `rds-create-webapp-db.png`  
-📸 `rds-webapp-db-summary.png`  
-📸 `rds-inbound-rules-sg-update.png`
+📸 RDS created  
+![RDS DB Created](assets/rds-create-webapp-db.png)  
+📸 RDS summary  
+![RDS Summary](assets/rds-webapp-db-summary.png)  
+📸 Inbound SG rules  
+![Inbound Rules](assets/rds-inbound-rules-sg-update.png)
 
 ---
 
@@ -60,12 +65,18 @@ Created folder structure and initialized GitHub repo.
 
 Connected via `.pem` key from macOS terminal.
 
-📸 `ec2-instance-summary.png`  
-📸 `ec2-instance-dashboard.png`  
-📸 `ssh-key-permissions.png`  
-📸 `mac-ssh-into-ec2.png`  
-📸 `ssh-into-ec2.png`  
-📸 `whoami-and-update.png`
+📸 EC2 summary  
+![EC2 Summary](assets/ec2-instance-summary.png)  
+📸 EC2 dashboard  
+![EC2 Dashboard](assets/ec2-instance-dashboard.png)  
+📸 SSH key permissions  
+![SSH Permissions](assets/ssh-key-permissions.png)  
+📸 SSH from macOS  
+![SSH into EC2](assets/mac-ssh-into-ec2.png)  
+📸 SSH confirmation  
+![EC2 Login](assets/ssh-into-ec2.png)  
+📸 whoami + yum update  
+![whoami + yum update](assets/whoami-and-update.png)
 
 ---
 
@@ -77,9 +88,12 @@ sudo systemctl start httpd
 sudo systemctl enable httpd
 ```
 
-📸 `install-apache-start.png`  
-📸 `install-apache-complete.png`  
-📸 `apache-start-and-enable.png`
+📸 Install started  
+![Apache Install Start](assets/install-apache-start.png)  
+📸 Install complete  
+![Apache Install Complete](assets/install-apache-complete.png)  
+📸 Service enabled  
+![Apache Enabled](assets/apache-start-and-enable.png)
 
 ---
 
@@ -89,10 +103,14 @@ sudo systemctl enable httpd
 echo "<h1>Hello from Chet's EC2 Web Server!</h1>" | sudo tee /var/www/html/index.html
 ```
 
-📸 `echo-html-bugged.png`  
-📸 `echo-html-fixed.png`  
-📸 `apache-default-page.png`  
-📸 `custom-ec2-webpage.png`
+📸 Broken echo command  
+![Echo Bug](assets/echo-html-bugged.png)  
+📸 Fixed echo command  
+![Echo Fixed](assets/echo-html-fixed.png)  
+📸 Apache default page  
+![Apache Default](assets/apache-default-page.png)  
+📸 Custom EC2 HTML served  
+![Custom Webpage](assets/custom-ec2-webpage.png)
 
 ---
 
@@ -104,12 +122,17 @@ sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 sudo yum install -y mysql-community-client
 ```
 
-📸 `ec2-install-mysql-repo.png`  
-📸 `ec2-import-mysql-gpg.png`  
-📸 `ec2-install-mysql-client.png`  
-📸 `ec2-mysql-client-install-fail.png`
+📸 Install repo  
+![MySQL Repo](assets/ec2-install-mysql-repo.png)  
+📸 Import GPG  
+![Import GPG](assets/ec2-import-mysql-gpg.png)  
+📸 Install client  
+![Install Client](assets/ec2-install-mysql-client.png)  
+📸 Client install failed  
+![Install Fail](assets/ec2-mysql-client-install-fail.png)
 
-> If install fails:
+If install fails:
+
 ```bash
 sudo yum clean packages
 sudo yum clean metadata
@@ -117,9 +140,10 @@ sudo yum makecache
 sudo yum install -y mysql-community-client --nogpgcheck
 ```
 
-📸 `ec2-clean-metadata.png`  
-📸 `ec2-install-mysql-nogpg.png`  
-📸 `ec2-mysql-client-install-success.png`
+📸 Cleaned metadata  
+![Clean Metadata](assets/ec2-clean-metadata.png)  
+📸 Final install success  
+![Install Success](assets/ec2-mysql-client-install-success.png)
 
 ---
 
@@ -129,7 +153,8 @@ sudo yum install -y mysql-community-client --nogpgcheck
 mysql -h webapp-db.cuxami6yiy1p.us-east-1.rds.amazonaws.com -u admin -p
 ```
 
-📸 `ec2-mysql-login-success.png`
+📸 Login successful  
+![MySQL Login](assets/ec2-mysql-login-success.png)
 
 ---
 
@@ -156,8 +181,10 @@ SELECT * FROM users;
 DESCRIBE users;
 ```
 
-📸 `ec2-create-db-webapp.png`  
-📸 `ec2-select-describe-users-table.png`
+📸 Created DB and inserted users  
+![Create WebApp DB](assets/ec2-create-db-webapp.png)  
+📸 Selected and described users  
+![Describe Users](assets/ec2-select-describe-users-table.png)
 
 ---
 
@@ -167,29 +194,30 @@ DESCRIBE users;
 mysqldump -h webapp-db.cuxami6yiy1p.us-east-1.rds.amazonaws.com -u admin -p webapp users > users.sql
 ```
 
-📸 `ec2-mysqldump-users.png`  
+📸 Exported via mysqldump  
+![mysqldump](assets/ec2-mysqldump-users.png)  
 💾 File saved to `/assets/users.sql`
 
 ---
 
-## 📸 Screenshots Summary
+## 📸 Screenshot Summary
 
-All screenshots listed above are stored under `/screenshots/` and chronologically named based on action.
+All screenshots are stored under `/assets/`, named according to the step.
 
 ---
 
 ## 🧾 Lessons Learned
 
 - Security Groups must allow specific port access between EC2 and RDS
-- Amazon Linux 2023 needs special handling for MySQL GPG keys
-- Echoing HTML in bash requires escaping `!` and quotes
-- Screenshot documentation matters — for projects and interviews
+- Amazon Linux 2023 requires special handling for MySQL GPG key verification
+- Echoing HTML in bash needs careful escaping (`!`, `'`, `"`)
+- Documenting every step with screenshots makes troubleshooting and handoff easier
 
 ---
 
 ## 🧠 Interview Tip
 
-> "This lab demonstrates I can configure full-stack infrastructure in AWS with EC2, RDS, security group tuning, and client/server communication — all validated with real data and CLI work."
+> "This lab shows I can configure full-stack infrastructure on AWS — EC2 frontend, RDS backend, and Apache + MySQL integration — while solving CLI issues and documenting the full flow."
 
 ---
 
